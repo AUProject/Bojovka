@@ -22,6 +22,6 @@ class Unit:
         self.feats = unit_data['feats']
         self.orders = unit_data['orders']
         self.specs = unit_data['specs']
-        self.pos = None             # unit_data['pos'] # TODO should it be a map attr or an unit's?
+        self.pos = None             # unit_data['pos'] : should it be a map attr or an unit's?
 
 
