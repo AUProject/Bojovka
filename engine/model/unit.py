@@ -1,5 +1,6 @@
 """Unit construction args (unit_data) should look like dis"""
 default = {
+    "id": "0",                      # id of ubit model in db (model file)
     "name": "Default",              # Just a name of unit
     "hp": 100,                      # Toughness / health points
     "tp": "Unique",                 # Type of a unit, "unique", "vehicle" and so on. All possible values will be
