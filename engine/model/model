@@ -17,4 +17,13 @@
     "glb": 0,
     "specs": (),
     },
+    {
+    "name": "Cryptec",
+    "hp": 230,
+    "tp": "Unique",
+    "orders": (0, 0, 0),
+    "feats": (0, 0, 0, 0, 0, 0),
+    "glb": 1,
+    "specs": (0, 1, 2),
+    }
 ]
