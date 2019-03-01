@@ -32,4 +32,5 @@ class Unit:
         self.chance = unit_data['chance']
         self.dead = False
         self.dr = 0
+        self.side = 0
 

@@ -1,10 +1,7 @@
 from engine.model.unit import Unit
 from engine.model.skills import skills, d10, d100
+from engine.model.map import Map as mp
 
-
-# IDEA: make the preview of actions (it can be premium function)
-# kinda the player does some action, the prog calculates the possible result (the amount of damage, kill or not)
-# and shows the player before this action is confirmed and sent as an order
 
 def check(data, template):
     return True or False
@@ -36,10 +33,10 @@ def phase_1(player, Map):
 
     this is template 0
     """
-    data = somehow_get(None, 0)
+    data = somehow_get((), 0)
 
     for unit in data[1]:
-        if not legal(unit[0], unit[1]):
+        if not Map.validate(unit[0], unit[1]):
             somehow_send("Can't place unit(s) there")
             return
         else:
@@ -60,7 +57,7 @@ def prephase_2(player, Map):
         )
     )
     """
-    data = somehow_get(None, 1)
+    data = somehow_get((), 1)
 
     for action in data[1]:
         if d100 <= action[0].chance:
@@ -88,7 +85,7 @@ def phase_2(Map):
     )
     orders keywords -- "attack", "defence", "move", "close_combat"
     """
-    data = somehow_get(None, 2)
+    data = somehow_get((), 2)
     effect = []
     for order in data[1]:
         if order[1] == "attack":
@@ -109,16 +106,13 @@ def apply_orders(q, Map):
         # etc
 
 
-
-
 fighting = True
 
 action_queue = [[[] for j in range(5)]for i in range(7)] # and inside every cell up to 6 lists of buffs
 
 buffs = []
 
-Map = [[[] for j in range(5)]for i in range(7)]  #  ... make a class Map?
-                                                 #  sure, and put all buff stuff inside it
+Map = mp()
 
 phase_1(player=1, Map=Map)
 phase_1(player=2, Map=Map)
