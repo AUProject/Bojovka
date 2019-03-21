@@ -140,7 +140,7 @@ class Map(object):
                     self.dead.append(self[3][i])
                     self[1][i] = None
             for j in range(5):
-                for k in range(len(self[2][i][j]) - 1, 0, -1):
+                for k in range(len(self[2][i][j]) - 1, -1, -1):
                     if self[2][i][j][k] is None:
                         self[2][i][j].pop(k)
                     elif self[2][i][j][k].hp <= 0:
@@ -149,5 +149,30 @@ class Map(object):
                         self[2][i][j].pop(k)
         return 0
 
-
+    def gay_detector(self, unit, target_side=-1):
+        gay_order = (
+            (0, 0),
+            (1, 0),
+            (1, 1),
+            (0, 1),
+            (-1, 1),
+            (-1, 0),
+            (-1, -1),
+            (0, -1),
+            (1, -1),
+            (2, 0),
+            (0, 2),
+            (-2, 0),
+            (0, -2),
+        )
+        gay_list = []
+        coords = unit.pos
+        for i in gay_order:
+            i_coords = (coords[0], coords[1] + i[0], coords[2] + i[1])
+            inside_the_field = (0 <= i_coords[1] <= 4) and (0 <= i_coords[2] <= 4)
+            if self.simple_check(i_coords) and inside_the_field:
+                for j in self[i_coords[0]][i_coords[1]][i_coords[2]]:
+                    if target_side == -1 or j.side == target_side:
+                        gay_list.append(j)
+        return gay_list
 

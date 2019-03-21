@@ -161,7 +161,7 @@ DATA = eval(((open("scenario.sc")).read()).replace("\n", ""))
 fighting = True
 Map = mp()
 i = 0
-
+done = False
 
 phase_1(player=0, Map=Map)
 phase_1(player=1, Map=Map)
@@ -174,4 +174,4 @@ while fighting:
 
     fighting = phase_3(Map)*phase_3(Map)
 
-
+print("Done, check it out with the debug mode")
