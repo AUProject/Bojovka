@@ -203,4 +203,4 @@ while fighting:
 
     fighting = phase_3(Map)*phase_3(Map)
 
-print("Done, check it out with the debug mode")
+print("Done, check it out with the debug mode, test")
