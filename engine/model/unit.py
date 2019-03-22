@@ -33,10 +33,13 @@ class Unit:
         self.specs = unit_data['specs']
         self.pos = None             # unit_data['pos'] : should it be a map attr or an unit's? Both.
         #  self.chance = unit_data['chance']
+        #  TODO refactor this mess of stats
         self.dead = False
         self.dr = 0
         self.side = 0
         self.buffs = []
+        self.defencing = False
+        self.been_attacked_by = []
 
     def attack(self, target):
         if self.type != "titan" and self.type != "aviation":
@@ -51,12 +54,11 @@ class Unit:
 
         return 0
 
-    def move(self):
-        return 0
-
-    def close_combat(self):
-        return 0
-
-    def defence(self):
-        return 0
+    def update(self):
+        if self.hp <= 0:
+            self.dead = True
+            self.hp = 0
+            self.defencing = False
+            return -1
+        self.been_attacked_by = []
 

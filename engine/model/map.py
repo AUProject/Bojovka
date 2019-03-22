@@ -25,6 +25,7 @@ class Map(object):
         self.descent = []
         self.concealed = []
         self.all = {}
+        self.defencing = set()
 
     def __getitem__(self, item):
         return self.map[item]

@@ -10,6 +10,10 @@ from engine.model.map import Map as mp
 DEBUG = True
 
 
+def by_orders(i):
+    return i[1]
+
+
 def check(data, template):
     pass
     return True
@@ -113,30 +117,55 @@ def phase_2(Map):
         i += 1
     else:
         data = somehow_get((), 2)
+
     effect = []
-    for order in data[1]:
+    defencing = set()
+    ddata = sorted(data[1], key=by_orders, reverse=True)
+
+    for order in ddata:
+        a, x, y, z = order[0]
         if len(order) == 3:
-            a, x, y, z = order[0]
             if len(order[2]) == 4:  #  it can be only attack or close combat-- exact coords of unit
                 if Map.simple_check(order[0]) and Map.simple_check(order[2]):
                     damage = (d10() + Map[a][x][y][z].global_mod + Map[a][x][y][z].orders[0]) * 10
                     b, x1, y1, z1 = order[2]
                     Map[b][x1][y1][z1].hp -= damage
+                    Map[b][x1][y1][z1].been_attacked_by.append(Map[a][x][y][z])
             if len(order[2]) == 3:
                 if order[1] == "attack":
                     damage = (d10() + Map[a][x][y][z].global_mod + Map[a][x][y][z].orders[0]) * 10
                     b, x1, y1, = order[2]
                     z1 = randint(0, len(Map[b][x1][y1]) - 1)
                     Map[b][x1][y1][z1].hp -= damage
-                elif order[1] == "defence":
-                    pass
+                    Map[b][x1][y1][z1].been_attacked_by.append(Map[a][x][y][z])
                 elif order[1] == "move":
                     unit = Map[a][x][y][z]
                     if Map.place(unit, order[2], unit.side) == 0:
                         Map[a][x][y][z] = None
+        elif len(order) == 2:
+            if order[1] == "defence":
+                Map[a][x][y][z].defencing = True
+                defencing.add(Map[a][x][y][z])
 
+    for unit in defencing:
+        damage = (d10() + unit.global_mod + unit.orders[1]) * 10
+        possible_targets = set(Map.gay_detector(unit, unit.side ^ 1))
+        if len(possible_targets) > 0:
 
-
+            if len(unit.been_attacked_by) == 1:
+                target = unit.been_attacked_by[0]
+                if target in possible_targets:
+                    target.hp -= damage
+                    target.been_attacked_by.append(unit)
+            elif len(unit.been_attacked_by) > 1:
+                damage //= 2
+                for target in unit.been_attacked_by:
+                    target.hp -= damage
+                    target.been_attacked_by.append(unit)
+            else:
+                target = possible_targets.pop()
+                target.hp -= damage
+                target.been_attacked_by.append(unit)
     "how it should be -- firstly coordinates are handled by Map, then it should be interaction" \
     "Unit objects "
     Map.update()
