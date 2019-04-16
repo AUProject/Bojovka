@@ -172,6 +172,32 @@ def phase_2(Map):
     return effect
 
 
+def prephase_3(Map):
+    "here data should be "
+    if DEBUG:
+        global i
+        data = DATA[i]
+        i += 1
+    else:
+        data = somehow_get(None, 3)
+
+    """На этой фазе проводятся дуэли на поле боя. Если два уникальных юнита находятся в одной клетке, то они могут
+    вступить в дуэль. Это происходит, если оба игрока согласятся. Если же в дуэль желает вступить только один из
+    участников сражения, то кидается кубик на успешность вхождения в дуэль (если значение 6+, то дуэль совершается).
+    Если против одного юнита желает сразится в дуэли несколько юнитов врага, то дуэли будут происходить в порядке
+    очереди отдачи приказов. При начале дуэли, оба юнита сначала  используют свои способности, а потом уже наносят друг
+    другу урон как при обычном бое со всеми своими модификаторами. После нанесения урона дуэль завершается,
+    и сражавшиеся юниту могут действовать на фазе 3.
+    """
+    #  todo make dis
+
+    #  loop for pending duels
+    #  does the duel happen?
+    # *prephase 2* for a duel
+    # *phase 2* for a duel
+    #  endloop
+
+
 def phase_3(Map):
     """Here data should be (3, 1) or (3, 0). 0 is "continue battle", 1 is "retreat" """
     if DEBUG:
@@ -179,7 +205,7 @@ def phase_3(Map):
         data = DATA[i]
         i += 1
     else:
-        data = somehow_get(None, 3)
+        data = somehow_get(None, 4)
     if data[1][0] != "continue":
         return 0
     else:
@@ -200,6 +226,8 @@ while fighting:
     prephase_2(player=1, Map=Map)
 
     phase_2(Map)
+
+    prephase_3(Map)
 
     fighting = phase_3(Map)*phase_3(Map)
 

@@ -40,6 +40,7 @@ class Unit:
         self.buffs = []
         self.defencing = False
         self.been_attacked_by = []
+        self.succ_of_last_cast = False
 
     def attack(self, target):
         if self.type != "titan" and self.type != "aviation":

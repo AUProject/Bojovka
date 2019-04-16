@@ -11,7 +11,7 @@ class Main(tk.Frame):
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         self.add_img = tk.PhotoImage(file="dickpic.png")
-        btn_open_dlg = tk.Button(toolbar, text="хуй", command=self.open_dialogue, bg='#FF77FF', bd=0,
+        btn_open_dlg = tk.Button(toolbar, text="добавить юнит", command=self.open_dialogue, bg='#FF77FF', bd=0,
                                  compound=tk.TOP, image=self.add_img)
         btn_open_dlg.pack(side=tk.LEFT)
         self.tree = ttk.Treeview(self, columns=('ID', 'name', 'HP', 'attack', 'orders', 'skills'), height=15, show='headings')

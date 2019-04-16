@@ -98,8 +98,103 @@ def Technomancing(data, Map):
                         unit.hp -= unit.hp
 
 
+def caucasus_psykers(data, Map):
+    """data for this skill should be like dis
+                {
+                    'Unit': Unit object # caster
+                }
+            """
+    pass
+
+
+def prophecy(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def biomancy(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def telepatics(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def explosion(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def prepared_defence(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def fire_support(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def defence_mode(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def relocation(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+def exterminate(data, Map):
+    """data for this skill should be like dis
+                    {
+                        'Unit': Unit object # caster
+                    }
+                """
+    pass
+
+
+'''all EMPRAH's passive skills and weapons should be built in its model, there are too of them and not usable'''
+#  todo split this shit to "reaction" "passive" and "castable"
+
+
 skills = {
     "0": Chronometron,
     "1": Moleculary_griefing,
     "2": Technomancing,
+    "3": caucasus_psykers,
 }
