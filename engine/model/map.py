@@ -4,7 +4,7 @@ from engine.model.unit import Unit
 class Map(object):
     DEBUG = True
     if DEBUG:
-        unit_list = eval(((open("engine/model/model")).read()).replace("\n", ""))
+        unit_list = eval(((open("engine/model/units/all")).read()).replace("\n", ""))
     obj = None
 
     def __new__(cls, *args, **kwargs):
@@ -26,6 +26,7 @@ class Map(object):
         self.concealed = []
         self.all = {}
         self.defencing = set()
+        self.limits = None      # here should be tracked limits of units on the field
 
     def __getitem__(self, item):
         return self.map[item]

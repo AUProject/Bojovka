@@ -6,7 +6,8 @@ d10 = lambda: randint(1, 10)
 d100 = lambda: randint(1, 100)
 
 
-def Chronometron(data, MAP):
+#  legacy
+def chronometron(data, MAP):
     """data for this skill should be like dis
     {
         'target': (4, 3), # target cell
@@ -56,7 +57,11 @@ def Chronometron(data, MAP):
                     unit.glb -= 1
 
 
-def Moleculary_griefing(data, Map):
+#  legacy
+
+
+#  legacy
+def moleculary_griefing(data, Map):
     """data for this skill should be like dis
         {
             'target': (4, 3), # target cell
@@ -80,7 +85,8 @@ def Moleculary_griefing(data, Map):
                     Map[data['target']].hp -= effect
 
 
-def Technomancing(data, Map):
+#  legacy
+def technomancing(data, Map):
     """data for this skill should be like dis
             {
                 'target': (4, 3), # target cell
@@ -188,13 +194,25 @@ def exterminate(data, Map):
     pass
 
 
-'''all EMPRAH's passive skills and weapons should be built in its model, there are too of them and not usable'''
+def tank_shot(data, Map):
+    pass
+
+
+'''all EMPRAH's passive skills and weapons should be built in its model_to_delete, there are too of them and not usable'''
 #  todo split this shit to "reaction" "passive" and "castable"
 
 
 skills = {
-    "0": Chronometron,
-    "1": Moleculary_griefing,
-    "2": Technomancing,
-    "3": caucasus_psykers,
+    "0"  : caucasus_psykers,
+    "1"  : prophecy,
+    "2"  : biomancy,
+    "3"  : telepatics,
+    "4"  : explosion,
+    "5"  : prepared_defence,
+    "6"  : fire_support,
+    "7"  : defence_mode,
+    "8"  : relocation,
+    "9"  : exterminate,
+    "10" : tank_shot,
 }
+

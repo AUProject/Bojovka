@@ -1,0 +1,9 @@
+{
+    "name": "",
+    "hp": 0,
+    "tp": "Infantry",
+    "orders": (0, 0, 0),
+    "feats": (0, 0, 0, 0, 0, 0),
+    "glb": 0,
+    "specs": (),
+    },
