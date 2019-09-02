@@ -1,0 +1,444 @@
+[
+    {
+        "name": "Prophecy",
+        "keywords": {"activation", "warp", "damage",},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "effect_to_enemy": ["psyker_prophecy_d"],
+            "effect_to_friend": ["psyker_prophecy_b"],
+            },
+    },
+
+    {
+        "name": "Biomancy",
+        "keywords": {"activation", "warp", "damage",},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "power": 3,
+            "effect_to_enemy": ["damage"],
+            "effect_to_friend": ["heal"],
+            },
+    },
+
+    {
+        "name": "Telepathy",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "effect_to_friend": ["psyker_telepathy"],
+            "effect_to_self": ["psyker_telepathy"],
+            },
+    },
+
+    {
+        "name": "Explosives",
+        "keywords": {"activation", "diversion", "damage",},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "power": 8,
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "Disorient",
+        "keywords": {"activation", "diversion"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "effect_to_enemy": ["stun"],
+            },
+    },
+
+    {
+        "name": "Fortify_a",
+        "keywords": {"activation", "diversion"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1
+        },
+        "effects": {
+            "effect_to_friend": ["fortified"],
+            },
+    },
+
+    {
+        "name": "Fortify_t",
+        "keywords": {"trigger", "damage",},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 0.5
+        },
+        "effects": {
+            "power": 5,
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "Fire_support",
+        "keywords": {"activation"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_atac"],
+            },
+    },
+
+    {
+        "name": "APC_protection",
+        "keywords": {"activation"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_protec"],
+            },
+    },
+
+    {
+        "name": "APC_relocation",
+        "keywords": {"activation"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_move"],
+            },
+    },
+
+    {
+        "name": "Tank",
+        "keywords": {"attack_order", "damage",},
+        "aoe": {"cell", "cell_on_column"},
+        "conditions": {
+            "cast_chance": "auto",
+            "aoe_is": {
+            "cell_on_column": ("eq", "dm", 0,5),
+            "cell": ("eq", "dm", 1),
+            }
+        },
+        "effects": {
+            "power": "full",
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "Exterminate",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit", "range"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effects": {
+            "effect_to_friend": ["instant_kill"],
+            "effect_to_enemy": ["instant_kill"],
+            "effect_to_self": ["instant_kill"],
+            },
+    },
+
+    {
+        "name": "Mental_affect",
+        "keywords": {"activation", "warp"},
+        "aoe": {"all"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effects": {
+            "effect_to_friend": ["emperor_presence_b"],
+            "effect_to_enemy": ["emperor_presence_d"],
+            },
+    },
+
+    {
+        "name": "Paria",
+        "keywords": {"trigger"},
+        "aoe": {"unit", "range"},
+        "conditions": {
+            "cast_chance": "auto",
+        },
+        "effects": {
+            "effect_to_enemy": [None],
+            },
+    },
+
+    {
+        "name": "Cleansing_flame",
+        "keywords": {"activation", "damage", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1,
+            "other_chance": 0.5,
+        },
+        "effects": {
+            {
+                "power": 8,
+                "effect_to_enemy": ["damage"]
+                }
+            {
+                "effect_to_enemy": ["stun"],
+                }
+            },
+    },
+
+    {
+        "name": "True_sight",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "effect_to_friend": ["ahmenid_true_sight"],
+            },
+    },
+
+    {
+        "name": "Saoshiant_a",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "effect_to_friend": ["saoshiant_b"],
+            },
+    },
+
+    {
+        "name": "Artillery",
+        "keywords": {"attack_order", "damage",},
+        "aoe": {"row", "cell", "range"},
+        "conditions": {
+            "cast_chance": "auto",
+            "aoe_is": {
+            "row": ("eq", "dm", 0,5),
+            "cell": ("eq", "dm", 1),
+            }
+        },
+        "effects": {
+            "power": "full"
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "APCn_cover",
+        "keywords": {"activation"},
+        "aoe": {"column"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_protec"],
+            },
+    },
+
+    {
+        "name": "APCn_fire",
+        "keywords": {"activation"},
+        "aoe": {"all"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_atac"],
+            },
+    },
+
+    {
+        "name": "APCn_relocation",
+        "keywords": {"activation"},
+        "aoe": {"column"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "effect_to_friend": ["apc_move"],
+            },
+    },
+
+    {
+        "name": "Unbound_fury",
+        "keywords": {"activation", "warp"},
+        "aoe": {"all"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "effect_to_friend": ["unbound_fury_b"],
+            },
+    },
+
+    {
+        "name": "Cursed_ritual",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "power": 0.5,
+            "percent_max_hp": 1,
+            "effect_to_friend": ["revive"],
+            },
+    },
+
+    {
+        "name": "Warp_faces_a",
+        "keywords": {"activation", "warp"},
+        "aoe": {"cell"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "effect_to_enemy": ["warp_face_curse"],
+            },
+    },
+
+    {
+        "name": "Warp_faces_t",
+        "keywords": {"trigger", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 0.5,
+        },
+        "effect": {
+            "effect_to_self": ["stun"],
+            },
+    },
+
+    {
+        "name": "Cardinal_reaction_t",
+        "keywords": {"trigger","damage"},
+        "aoe": {"unit", "range"},
+        "conditions": {
+            "cast_chance": "auto",
+        },
+        "effect": {
+            "power": 10,
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "Tzeentch_flame",
+        "keywords": {"activation", "warp", "damage"},
+        "aoe": {"cell"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "power": 3,
+            "effect_to_enemy": ["damage"],
+            },
+    },
+
+    {
+        "name": "Sleep",
+        "keywords": {"activation", "warp"},
+        "aoe": {"several_units"},
+        "conditions": {
+            "amount": 2,
+            "cast_chance": 1,
+        },
+        "effect": {
+            "effect_to_enemy": ["warp_face_curse"],
+            },
+    },
+
+    {
+        "name": "Blight_bless",
+        "keywords": {"activation", "warp"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effect": {
+            "power": 6,
+            "effect_to_friend": ["heal", "blight_bless"],
+            },
+    },
+
+    {
+        "name": "Trap_a",
+        "keywords": {"activation", "diversion"},
+        "aoe": {"several_units"},
+        "conditions": {
+            "cast_chance": 1,
+            "amount": 3,
+        },
+        "effects": {
+            "effect_to_enemy": ["desert_trap"],
+            },
+    },
+
+    {
+        "name": "Trap_t",
+        "keywords": {"trigger", "damage"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": "auto"
+        },
+        "effects": {
+            "power": 3,
+            "no_invul": True,
+            "effect_to_self": ["damage"],
+            },
+    },
+
+     {
+        "name": "Supply_sabotage_a",
+        "keywords": {"activation", "diversion"},
+        "aoe": {"map"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effects": {
+            "effect_to_map": ["supply_sabotaged_d"],
+            },
+    },
+
+    {
+        "name": "Supply_sabotage_t",
+        "keywords": {"trigger"},
+        "aoe": {"unit"},
+        "conditions": {
+            "cast_chance": 0.3,
+        },
+        "effects": {
+            "effect_to_self": ["stun"],
+            },
+    },
+
+    {
+        "name": "Plan_change",
+        "keywords": {"activation", "diversion"},
+        "aoe": {"map"},
+        "conditions": {
+            "cast_chance": 1,
+        },
+        "effects": {
+            "effect_to_enemy": [use_skill],
+            },
+    },
+]

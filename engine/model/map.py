@@ -4,7 +4,7 @@ from engine.model.unit import Unit
 class Map(object):
     DEBUG = True
     if DEBUG:
-        unit_list = eval(((open("engine/model/units/all")).read()).replace("\n", ""))
+        unit_list = eval(((open("engine/model/units/terra_unification")).read()).replace("\n", ""))
     obj = None
 
     def __new__(cls, *args, **kwargs):
@@ -13,20 +13,18 @@ class Map(object):
         return cls.obj
 
     def __init__(self):
-        self.map = [None]                                             #  Titan place for Player 1
-        self.map.append([[None], [None], [None], [None], [None]])     #  place for aviation Player 1
-        self.map.append([[[] for j in range(5)] for i in range(5)])   #  Battlefield
-        self.map.append([[None], [None], [None], [None], [None]])     #  place for aviation Player 2
-        self.map.append(None)                                         #  Titan place for Player 2
+        self.map = [None]  # Titan place for Player 1
+        self.map.append([[None], [None], [None], [None], [None]])       # place for aviation Player 1
+        self.map.append([[[] for j in range(5)] for i in range(5)])     # Battlefield
+        self.map.append([[None], [None], [None], [None], [None]])       # place for aviation Player 2
+        self.map.append(None)                                           # Titan place for Player 2
 
-        self.buff_stack = []    #  [(buff_id, dependencies), ..  There will be all buffs wth lifetime
-                                #  dependencies should be (lifetime, [unit, unit...])
+        self.global_buffs = []                      # [(buff_id, dependencies), ..  There will be all buffs wth lifetime
+        #                                           #  dependencies should be (lifetime, [unit, unit...])
         self.dead = []
-        self.descent = []
-        self.concealed = []
         self.all = {}
         self.defencing = set()
-        self.limits = None      # here should be tracked limits of units on the field
+        self.limits = None  # here should be tracked limits of units on the field
 
     def __getitem__(self, item):
         return self.map[item]
@@ -35,15 +33,16 @@ class Map(object):
         self.map[key] = value
 
     "Validates if placement of unit is correct"
+
     def validate(self, unit, coords):
         if len(coords) < 1:
             return "Invalid format"
         if type(unit) != Unit:
             unit = Unit(self.__class__.unit_list[unit])
         if unit.type == "titan":
-            if not(unit.side == 0 and coords[0] == 0 or unit.side == 2 and coords[0] == 4):
+            if not (unit.side == 0 and coords[0] == 0 or unit.side == 2 and coords[0] == 4):
                 return "Invalid placement"
-            elif not(self[coords[0]] is None):
+            elif not (self[coords[0]] is None):
                 return "Cell is already full"
             else:
                 return 0
@@ -53,7 +52,7 @@ class Map(object):
 
         if unit.type == "aviation":
             if unit.side == 0 and coords[0] == 1 and 0 <= coords[1] <= 4:
-                if not(self[1][coords[1]] is None):
+                if not (self[1][coords[1]] is None):
                     return "Cell is already full"
                 else:
                     return 0
@@ -68,7 +67,7 @@ class Map(object):
         if len(coords) < 3:
             return "Invalid format"
 
-        if coords[0] != 2 or not(0 <= coords[1] <= 4) or not(0 <= coords[2] <= 4):
+        if coords[0] != 2 or not (0 <= coords[1] <= 4) or not (0 <= coords[2] <= 4):
             return "Invalid placement"
         elif len(self[coords[0]][coords[1]][coords[2]]) > 5:
             return "Cell is already full"
@@ -119,6 +118,7 @@ class Map(object):
             return 0
 
     "Recalculating buffs and applying deaths"
+
     def update(self):
         if not self.check(self[0]):
             if self[0].hp <= 0:
@@ -177,4 +177,3 @@ class Map(object):
                     if target_side == -1 or j.side == target_side:
                         gay_list.append(j)
         return gay_list
-

@@ -1,8 +1,7 @@
-from engine.model.unit import Unit
 from random import randint
 from math import floor
-from engine.model.skills import skills, d10, d100
-from engine.model.map import Map as mp
+from model.skills import Skill, d10, d100
+from model.map import Map as mp
 
 "todo: make a class Data and put all this shit inside"
 "todo: make whole coordinate handling a part of Map class"
@@ -41,17 +40,29 @@ def somehow_send(data_to_send_to_server=None):
     return data_to_send_to_server
 
 
-def phase_1(player, Map):
-    """here should be player's troops arrangement, like
-    (0,
-    (
-        (<unit_id>, <coords>),
-        (<unit_id...);
+def phase_0(player, Map):
+    # here should be applied global modifiers and special rules such as fraction rules
+    if DEBUG == 1:
+        pass
 
+    pass
+
+
+def phase_1(player, Map):
+    """here should be player's troops arrangement and perks, like
+    (0,
+        (
+        (<unit_id>, <coords>),
+        (<unit_id...),
+        ),
+        (<perk_id>,
+         <perk_id>...
+        )
+    )
     this is template 0
     for coordinate writing rules check engine/model/map.py
     """
-    if DEBUG:
+    if DEBUG == 1:
         global i
         data = DATA[i]
         i += 1
@@ -71,14 +82,10 @@ def prephase_2(player, Map):
         (
             (caster, skill, data)  #  this is data for certain skill, not for phase overall
             (caster, skill, data)... # caster is Unit object
-        ),
-        (
-            (unit, coords), # introduction into battle/descent
-            (unit, coords)
         )
     )
     """
-    if DEBUG:
+    if DEBUG == 1:
         global i
         data = DATA[i]
         i += 1
@@ -86,17 +93,11 @@ def prephase_2(player, Map):
         data = somehow_get((), 0)
 
     for action in data[1]:
-        if d100 <= action[0].chance:
-            action[1](action[2], Map)
-        else:
-            print("skill casting failed")
+        if action[1] not in action[0].specs:
+            print("Illegal action: unit has not this skill")
+            continue
+        action[1](action[2], Map)  #  skill handles it all itself, including status triggers
 
-    for unit in data[2]:
-        if not legal(unit[0], unit[1]):
-            somehow_send("Can't place unit(s) there")
-            return
-        else:
-            Map[unit[1]] = unit[0]
     Map.update()
 
 
@@ -109,9 +110,10 @@ def phase_2(Map):
             ((2, 4, 3, 2), "attack", (2, 1, 3[, 0]))...
         )
     )
-    orders keywords -- "attack", "defence", "move", "close" #  close -> close combat
+    orders keywords -- "attack", "defence", "move", "close"   close -> close combat
+    also "sp_attack" -- modified with skill attack, like tank's
     """
-    if DEBUG:
+    if DEBUG == 1:
         global i
         data = DATA[i]
         i += 1
@@ -120,17 +122,27 @@ def phase_2(Map):
 
     effect = []
     defencing = set()
-    ddata = sorted(data[1], key=by_orders, reverse=True)
+    ddata = sorted(data[1], key=by_orders, reverse=True)  #  orders are sorted in reverse order to make defence the last
 
     for order in ddata:
         a, x, y, z = order[0]
         if len(order) == 3:
             if len(order[2]) == 4:  #  it can be only attack or close combat-- exact coords of unit
                 if Map.simple_check(order[0]) and Map.simple_check(order[2]):
-                    damage = (d10() + Map[a][x][y][z].global_mod + Map[a][x][y][z].orders[0]) * 10
                     b, x1, y1, z1 = order[2]
-                    Map[b][x1][y1][z1].hp -= damage
-                    Map[b][x1][y1][z1].been_attacked_by.append(Map[a][x][y][z])
+                    damage = (d10() + Map[a][x][y][z].global_mod + Map[a][x][y][z].orders[0]) * 10
+
+                    if order[1] == "close":
+                        success = Map[a][x][y][z].engage_cc(Map[b][x1][y1][z1])
+                        if success:
+                            damage //= 2
+                        else:
+                            damage = 0
+
+                    if damage > 0:
+                        Map[b][x1][y1][z1].been_attacked_by.append(Map[a][x][y][z])
+                        Map[b][x1][y1][z1].hp -= damage
+
             if len(order[2]) == 3:
                 if order[1] == "attack":
                     damage = (d10() + Map[a][x][y][z].global_mod + Map[a][x][y][z].orders[0]) * 10
@@ -138,10 +150,18 @@ def phase_2(Map):
                     z1 = randint(0, len(Map[b][x1][y1]) - 1)
                     Map[b][x1][y1][z1].hp -= damage
                     Map[b][x1][y1][z1].been_attacked_by.append(Map[a][x][y][z])
+
+                elif order[1] == "sp_attack":
+                    for skill in Map[a][x][y][z].specs:
+                        if "attack_order" in skill.keywords:
+                            skill(Map[a][x][y][z], order[2])
+
                 elif order[1] == "move":
+                    #  TODO save throws
                     unit = Map[a][x][y][z]
                     if Map.place(unit, order[2], unit.side) == 0:
                         Map[a][x][y][z] = None
+
         elif len(order) == 2:
             if order[1] == "defence":
                 Map[a][x][y][z].defencing = True
@@ -173,11 +193,11 @@ def phase_2(Map):
 
 
 def prephase_3(Map):
-    "here data should be "
-    if DEBUG:
+    "here data should be 3..."
+    if DEBUG == 1:
         global i
         data = DATA[i]
-        i += 1
+
     else:
         data = somehow_get(None, 3)
 
@@ -199,8 +219,8 @@ def prephase_3(Map):
 
 
 def phase_3(Map):
-    """Here data should be (3, 1) or (3, 0). 0 is "continue battle", 1 is "retreat" """
-    if DEBUG:
+    """Here data should be (4, 1) or (4, 0). 0 is "continue battle", 1 is "retreat" """
+    if DEBUG == 1:
         global i
         data = DATA[i]
         i += 1

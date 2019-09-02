@@ -1,9 +1,46 @@
+Unit template
+unit_a =
 {
     "name": "",
     "hp": 0,
     "tp": "Infantry",
     "orders": (0, 0, 0),
-    "feats": (0, 0, 0, 0, 0, 0),
     "glb": 0,
     "specs": (),
+    "chance": 100,
+}
+
+Skill example
+
+skill_a =
+{
+    "name": "",
+    "keywords": {"attack_order", "move_order", "defence_order", "trigger", "activation", "diversion", "warp", "range",
+     "damage"},
+    "aoe": {"unit", "cell", "column", "row", "all", "range", "cell_on_column", "several_units", "map"}, # area of effect
+    "conditions": {
+        "stat_is": {
+            "hp": ("greater", 50)
+        },
+        "status": {
+            "stun"   : 1,                                       # should be on target to activate skill
+            "frank"  : 0,                                       # should not be on target to activate skill
+        },
+        "cast_chance": ("auto", 1)
+        "other_chance": 0.5
     },
+    "effects": {
+        "power": 3, OR "full"                                   # dice multiplier or full attack (then default 10 power)
+        "effect_to_enemy": ["damage", "heal", "instant_kill", "revive", "*status0*", "*action2*", "use_skill"],
+        "effect_to_friend": ["damage", "heal", "instant_kill", "revive", "*status0*", "*status2*", ],
+        "effect_to_self": ["damage", "heal", "instant_kill", "revive", "*status0*", "*status2*", ],
+        "effect_to_map":["map(pregeneration)_status"],
+        },
+}
+
+Status template
+
+status_a = {
+
+
+}
